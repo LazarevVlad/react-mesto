@@ -21,8 +21,8 @@ function App() {
   return (
     <div className="App">
       <Header/>
-        <div className="profile main__section" onEditProfile={handleEditClick} onAddPlace={handleAddPlaceClick} onEditAvatar={handleAvatarClick} >
-          <Main/>
+        <div className="profile main__section">
+          <Main onEditProfile={handleEditClick} onAddPlace={handleAddPlaceClick} onEditAvatar={handleAvatarClick}/>
         </div>
     </div>
   );

@@ -1,44 +1,44 @@
 import close from '../images/close.svg';
 
-function Main() {
+function Main(props) {
 
-  function handleAddPlaceClick() {
-    document.querySelector('.popup').classList.add('popup_is-opened')
-  }
+  // function handleAddPlaceClick() {
+  //   document.querySelector('.popup').classList.add('popup_is-opened');
+  // }
 
   function closeAddPlaceClick() {
-    document.querySelector('.popup').classList.remove('popup_is-opened')
+    document.querySelector('.popup').classList.remove('popup_is-opened');
   }
 
-  function handleEditClick() {
-    document.querySelector('.popup_edit').classList.add('popup_is-opened')
-  }
+  // function handleEditClick() {
+  //   document.querySelector('.popup_edit').classList.add('popup_is-opened');
+  // }
 
   function closeEditClick() {
-    document.querySelector('.popup_edit').classList.remove('popup_is-opened')
+    document.querySelector('.popup_edit').classList.remove('popup_is-opened');
   }
 
-  function handleAvatarClick() {
-    document.querySelector('.popup_edit').classList.add('popup_is-opened')
-  }
+  // function handleAvatarClick() {
+  //   document.querySelector('.popup_edit').classList.add('popup_is-opened');
+  // }
 
   function closeAvatarClick() {
-    document.querySelector('.popup_edit').classList.remove('popup_is-opened')
+    document.querySelector('.popup_edit').classList.remove('popup_is-opened');
   }
 
   return(
     <div className="main__section">
 
     <div className="user-info">
-      <div className="user-info__photo"  onClick={handleAvatarClick} />
+      <div className="user-info__photo"  onClick={props.onEditAvatar} />
       <div className="user-info__data">
         <h1 className="user-info__name">dsfsdf</h1>
         <p className="user-info__job">sdfsdf</p>
-        <button className="button user-info__button_type_edit" id="edit" onClick={handleAddPlaceClick}>
+        <button className="button user-info__button_type_edit" id="edit" onClick={props.onEditProfile}>
           Edit
         </button>
       </div>
-      <button className="button user-info__button" onClick={handleEditClick}>+</button>
+      <button className="button user-info__button" onClick={props.onAddPlace}>+</button>
     </div>
 
       <div className="popup">
