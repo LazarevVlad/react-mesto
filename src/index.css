@@ -1,13 +1,32 @@
+@import url(./vendor/normalize.css);
+@import url(./vendor/fonts.css);
+@import url(./styles/app.css);
+@import url(./styles/header.css);
+@import url(./styles/logo.css);
+@import url(./styles/profile.css);
+@import url(./styles/user-info.css);
+@import url(./styles/button.css);
+@import url(./styles/places-list.css);
+@import url(./styles/place-card.css);
+@import url(./styles/popup.css);
+
+
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  background-color: #000;
+}
+.error-message {
+  color: #ff3333;
+  font-size: 0.8em;
+  transition: 0.3s;
+  padding: 0px;
+  opacity: 0;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.input-container__invalid .error-message {
+  padding: 10px;
+  opacity: 1;
+}
+
+.input-container__invalid .input__text {
+  border-color: #ff3333;
 }

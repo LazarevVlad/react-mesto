@@ -1,23 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import Header from './components/Header';
+// import UserInfo from './components/UserInfo';
+import Main from './components/Main';
 
 function App() {
+
+  let isEditProfilePopupOpen = false;
+  let isAddPlacePopupOpen = false;
+  let isEditAvatarPopupOpen = false;
+
+  function handleAddPlaceClick() {
+    let isAddPlacePopupOpen = true;
+  }
+  function handleEditClick() {
+    let isEditProfilePopupOpen = true;
+  }
+  function handleAvatarClick() {
+    let isEditAvatarPopupOpen = true;
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Header/>
+        <div className="profile main__section" onEditProfile={handleEditClick} onAddPlace={handleAddPlaceClick} onEditAvatar={handleAvatarClick} >
+          <Main/>
+        </div>
     </div>
   );
 }

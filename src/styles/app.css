@@ -1,0 +1,25 @@
+.App {
+  background-color: black;
+  min-height: 100vh;
+  font-family: 'Inter';
+  padding-bottom: 194px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@media screen and (max-width: 1024px) {
+  .App {
+    padding-bottom: 140px;
+  }
+}
+
+.main__section {
+  width: calc(100% - 400px);
+  margin: auto;
+}
+
+@media screen and (max-width: 980px) {
+  .main__section {
+    width: 90%;
+  }
+}
