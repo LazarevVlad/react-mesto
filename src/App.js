@@ -3,6 +3,7 @@ import Header from './components/Header';
 import Main from './components/Main';
 import PopupWithForm from './components/PopupWithForm';
 import Card from './components/Card';
+import ImagePopup from './components/ImagePopup';
 import api from './utils/Api';
 
 
@@ -11,7 +12,10 @@ function App() {
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
 
-  const [selectedCard, setSelectedCard] = useState(false);
+  const [selectedCard, setSelectedCard] = useState({
+    isOpen: false,
+    link: '',
+  });
 
   const [cards, setCards] = useState([]);
 
@@ -35,10 +39,19 @@ function App() {
     setIsEditAvatarPopupOpen(true);
   };
 
+  function handleCardClick (card) {
+    const { link } = card;
+    setSelectedCard({isOpen: true, link});
+  }
+
   function closeAllPopups() {
     setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
     setIsEditAvatarPopupOpen(false);
+    setSelectedCard({
+      isOpen: false,
+      link: '',
+    });
   }
 
   return (
@@ -54,15 +67,21 @@ function App() {
 
         <div className="places-list root__section">
           {cards.map((card) => 
-          <Card 
+          <Card
+          onCardClick={handleCardClick}
           key={card._id}
-          link={card.link}
-          name={card.name}
-          likes={card.likes}
+          card={card}
           />)}
         </div>
 
-        <PopupWithForm isOpen={isEditProfilePopupOpen}
+        <ImagePopup
+          isOpen={selectedCard.isOpen}
+          link={selectedCard.link}
+          onClose={closeAllPopups}
+        />
+
+        <PopupWithForm 
+          isOpen={isEditProfilePopupOpen}
           title='Редактировать профиль'
           name='edit'
           onClose={closeAllPopups}
