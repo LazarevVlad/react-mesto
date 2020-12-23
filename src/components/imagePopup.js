@@ -1,19 +1,20 @@
 import close from '../images/close.svg';
 
-function imagePopup() {
+function ImagePopup(props) {
 
   return(
-    <div class="popup popup_img">
-      <div class="popup__content popup__content_image">
+    <div className={`popup popup_type_img ${props.isOpen ? 'popup_is-opened' : ''}` }>
+      <div className="popup__content popup__content_image">
         <img
           src={close}
           alt=""
-         class="popup__close popup__img_close"
+          className="popup__close popup__img_close"
+          onClick={props.onClose}
         />
-        <img alt="" class="popup__img-open" />
+        <img alt="" className="popup__img-open" src={props.link} />
       </div>
     </div>
   )
 }
 
-export default imagePopup;
+export default ImagePopup;
