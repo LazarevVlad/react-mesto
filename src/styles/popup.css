@@ -9,6 +9,7 @@
   align-items: center;
   justify-content: center;
   display: none;
+  z-index: 100;
 }
 
 .popup__button {

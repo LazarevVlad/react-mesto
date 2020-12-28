@@ -35,7 +35,7 @@ class Api {
       .catch((err) => Promise.reject(new Error(err.message)));
   }
 
-  sendUserInfo(nameValue, aboutValue) {
+  sendUserInfo(userInfo) {
     return fetch(`${this.options.baseUrl}/users/me`, {
       method: "PATCH",
       headers: {
@@ -43,8 +43,8 @@ class Api {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        name: nameValue,
-        about: aboutValue,
+        name: userInfo.name,
+        about: userInfo.about,
       }),
     }).then((res) => {
       if (res.ok) {
@@ -84,9 +84,10 @@ class Api {
       })
       .catch((err) => Promise.reject(new Error(err.message)));
   }
-  setLike(cardId) {
+
+  changeLikeCardStatus(cardId, isLiked) {
     return fetch(`${this.options.baseUrl}/cards/like/${cardId}`, {
-      method: "PUT",
+      method: `${isLiked ? 'PUT' : 'DELETE'}`,
       headers: {
         authorization: this.options.token,
         "Content-Type": "application/json",
@@ -100,22 +101,7 @@ class Api {
       })
       .catch((err) => Promise.reject(new Error(err.message)));
   }
-  deleteLike(cardId) {
-    return fetch(`${this.options.baseUrl}/cards/like/${cardId}`, {
-      method: "DELETE",
-      headers: {
-        authorization: this.options.token,
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(new Error(res.status));
-      })
-      .catch((err) => Promise.reject(new Error(err.message)));
-  }
+
   changeAvatar(avatarValue) {
     return fetch(`${this.options.baseUrl}/users/me/avatar`, {
       method: "PATCH",

@@ -2,18 +2,20 @@ import close from '../images/close.svg';
 
 function PopUpWithForm(props) {
 
+  const { name, isOpen, onClose, title, onSubmit, children } = props;
+
   return(
-    <div className={`popup popup_type_${props.name} ${props.isOpen ? 'popup_is-opened' : ''}`}>
+    <div className={`popup popup_type_${name} ${isOpen ? 'popup_is-opened' : ''}`}>
         <div className="popup__content">
           <img
             src={close}
             alt=""
             className="popup__close"
-            onClick={props.onClose}
+            onClick={onClose}
           />
-          <h3 className="popup__title">{props.title}</h3>
-          <form className="popup__form" name={props.name}noValidate>
-            {props.children}
+          <h3 className="popup__title">{title}</h3>
+          <form className="popup__form" onSubmit={onSubmit} name={name} noValidate >
+            {children}
           </form>
         </div>
       </div>

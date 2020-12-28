@@ -1,4 +1,5 @@
 .place-card {
+  position: relative;
   width: 282px;
   background-color: #fff;
   border-radius: 10px;
@@ -47,6 +48,7 @@
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   position: relative;
+  z-index: 1;
 }
 
 .place-card__image::after {
@@ -79,4 +81,9 @@
   right: 15px;
   cursor: pointer;
   display: block;
+  z-index: 5;
+}
+
+.place-card__delete-icon.place-card__delete-icon_hidden {
+  display: none;
 }

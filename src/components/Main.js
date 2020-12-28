@@ -1,30 +1,22 @@
-import React, { useState, useEffect } from 'react';
-import api from '../utils/Api';
+import React, { useEffect, useState } from 'react';
+import Card from './Card';
+import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
 function Main(props) {
 
-  const [userName, setUserName] = useState(null);
-  const [userDescription, setUserDescription] = useState(null);
-  const [userAvatar, setUserAvatar] = useState(null);
-  
-  useEffect(() => {
-    api.getUserInfo()
-    .then((data) => {
-      setUserName(data.name);
-      setUserDescription(data.about);
-      setUserAvatar(data.avatar);
-    })
-  }, [])
+  const { cards, onCardClick, onCardsLike, onCardsDelete } = props;
+
+  const currentUser = React.useContext(CurrentUserContext);
 
   return(
-    <>
+    <div className="main">
       <div className="profile root__section">
 
         <div className="user-info">
-          <div className="user-info__photo" style={{ backgroundImage: `url(${userAvatar})` }} onClick={props.onEditAvatar} />
+          <div className="user-info__photo" style={{ backgroundImage: `url(${currentUser.avatar})` }} onClick={props.onEditAvatar} />
           <div className="user-info__data">
-            <h1 className="user-info__name">{userName}</h1>
-            <p className="user-info__job">{userDescription}</p>
+            <h1 className="user-info__name">{currentUser.name}</h1>
+            <p className="user-info__job">{currentUser.about}</p>
             <button className="button user-info__button_type_edit" id="edit" onClick={props.onEditProfile}>
               Edit
             </button>
@@ -33,7 +25,18 @@ function Main(props) {
         </div>
 
       </div>
-    </>
+
+      <div className="places-list root__section">
+        {cards.map((card) => 
+          <Card
+          onCardClick={onCardClick}
+          onCardsLike={onCardsLike}
+          onCardsDelete={onCardsDelete}
+          key={card._id}
+          card={card}
+        />)}
+      </div>
+    </div>
   )
 }
 
