@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import Header from './components/Header';
 import Main from './components/Main';
-import PopupWithForm from './components/PopupWithForm';
 // import Card from './components/Card';
 import ImagePopup from './components/ImagePopup';
 import api from './utils/Api';
 import { CurrentUserContext } from './contexts/CurrentUserContext';
 import EditProfilePopup from './components/EditProfilePopup';
-
+import EditAvatarPopup from './components/EditAvatarPopup';
+import AddPlacePopup from './components/AddPlacePopup'
 
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
@@ -78,6 +78,14 @@ function App() {
     })
   }
 
+  function handleUpdateAvatar(userData) {
+    api.changeAvatar(userData)
+    .then((data) => {
+      setCurrentUser(data);
+      closeAllPopups();
+    })
+  }
+
   function handleCardLike(card) {
     const isLiked = card.likes.some(i => i._id === currentUser._id);
 
@@ -99,17 +107,17 @@ function App() {
     <CurrentUserContext.Provider value={currentUser}>
       <div className="App">
         <Header/>
-          <div className="profile root__section">
-            <Main 
-            onEditProfile={handleEditClick} 
-            onAddPlace={handleAddPlaceClick} 
-            onEditAvatar={handleAvatarClick}
-            onCardClick={handleCardClick}
-            onCardsLike={handleCardLike}
-            onCardsDelete={handleCardDelete}
-            cards={cards}
-            />
-          </div>
+        <div className="profile root__section">
+          <Main 
+          onEditProfile={handleEditClick} 
+          onAddPlace={handleAddPlaceClick} 
+          onEditAvatar={handleAvatarClick}
+          onCardClick={handleCardClick}
+          onCardsLike={handleCardLike}
+          onCardsDelete={handleCardDelete}
+          cards={cards}
+          />
+        </div>
 
           <ImagePopup
             isOpen={selectedCard.isOpen}
@@ -118,130 +126,20 @@ function App() {
           />
 
           <EditProfilePopup 
-          isOpen={isEditProfilePopupOpen}
-          onClose={closeAllPopups}
-          onUpdateUser={handleUpdateUser}
-          ></EditProfilePopup>
-
-          {/* <PopupWithForm 
             isOpen={isEditProfilePopupOpen}
-            title='Редактировать профиль'
-            name='edit'
             onClose={closeAllPopups}
-            children={(
-            <>
-              <div className="input-container">
-                <input
-                  id="username"
-                  type="text"
-                  name="name_edit"
-                  className="popup__input popup__input_type_name"
-                  placeholder="Имя"
-                  required
-                  minLength="2"
-                  maxLength="30"
-                />
-                <span id="error-username" className="error-message"></span>
-              </div>
-              <div className="input-container">
-                <input
-                  id="job"
-                  type="text"
-                  name="job"
-                  className="popup__input popup__input_type_link-url"
-                  placeholder="О себе"
-                  required
-                  minLength="2"
-                  maxLength="30"
-                />
-                <span id="error-job" className="error-message"></span>
-              </div>
-              <button className="button popup__button popup__button_type_edit">
-                Сохранить
-              </button>
-            </>
-          )}
-          /> */}
-
-          <PopupWithForm 
-            isOpen={isAddPlacePopupOpen}
-            title='Новое место'
-            name='new'
-            onClose={closeAllPopups}
-            children={(
-              <>
-                <div className="input-container">
-                <input
-                  id="name"
-                  type="text"
-                  name="name"
-                  className="popup__input popup__input_type_name"
-                  placeholder="Название"
-                  required
-                  minLength="2"
-                  maxLength="30"
-                />
-                <span id="error-name" className="error-message"></span>
-              </div>
-              <div className="input-container">
-                <input
-                  id="url"
-                  type="url"
-                  name="link"
-                  className="popup__input popup__input_type_link-url"
-                  placeholder="Ссылка на картинку"
-                  required
-                />
-                <span id="error-url" className="error-message"></span>
-              </div>
-              <button
-                
-                className="button popup__button popup__button_type_new"
-                disabled
-              >
-                +
-              </button>
-              </>
-            )}
+            onUpdateUser={handleUpdateUser}
           />
 
-          <PopupWithForm isOpen={isEditAvatarPopupOpen}
-            title='Обновить аватар'
-            name='avatar'
+          <EditAvatarPopup
+            isOpen={isEditAvatarPopupOpen}
             onClose={closeAllPopups}
-            children={(
-              <>
-                <div className="input-container">
-                <input
-                  id="username"
-                  type="text"
-                  name="name_edit"
-                  className="popup__input popup__input_type_name"
-                  placeholder="Имя"
-                  required
-                  minLength="2"
-                  maxLength="30"
-                />
-                <span id="error-username" className="error-message"></span>
-              </div>
-              <div className="input-container">
-                <input
-                  id="job"
-                  type="text"
-                  name="job"
-                  className="popup__input popup__input_type_link-url"
-                  placeholder="О себе"
-                  required
-                  minLength="2"
-                  maxLength="30"
-                />
-                <span id="error-job" className="error-message"></span>
-              </div>
-              <button className="button popup__button popup__button_type_edit">
-                Сохранить
-              </button>
-              </>
-            )}
+            onUpdateAvatar={handleUpdateAvatar}
+          />
+
+          <AddPlacePopup
+            isOpen={isAddPlacePopupOpen}
+            onClose={closeAllPopups}
           />
       </div>
     </CurrentUserContext.Provider>

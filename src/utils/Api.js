@@ -102,7 +102,7 @@ class Api {
       .catch((err) => Promise.reject(new Error(err.message)));
   }
 
-  changeAvatar(avatarValue) {
+  changeAvatar(userInfo) {
     return fetch(`${this.options.baseUrl}/users/me/avatar`, {
       method: "PATCH",
       headers: {
@@ -110,7 +110,7 @@ class Api {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        avatar: avatarValue,
+        avatar: userInfo.avatar,
       }),
     })
       .then((res) => {
