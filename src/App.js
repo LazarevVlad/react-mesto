@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import Header from './components/Header';
 import Main from './components/Main';
-// import Card from './components/Card';
 import ImagePopup from './components/ImagePopup';
 import api from './utils/Api';
 import { CurrentUserContext } from './contexts/CurrentUserContext';
 import EditProfilePopup from './components/EditProfilePopup';
 import EditAvatarPopup from './components/EditAvatarPopup';
-import AddPlacePopup from './components/AddPlacePopup'
+import AddPlacePopup from './components/AddPlacePopup';
 
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
@@ -31,6 +30,7 @@ function App() {
     .then((data) => {
       setCurrentUser(data);
     })
+    .catch((err) => console.log(`Ошибка ${err}`));
   }, [])
 
   // получение данных карточек
@@ -41,7 +41,10 @@ function App() {
     .then((cardData) => {
       setCards(cardData);
     })
+    .catch((err) => console.log(`Ошибка ${err}`));
   }, [])
+
+  // Обработчики
 
   function handleAddPlaceClick() {
     setIsAddPlacePopupOpen(true);
@@ -55,11 +58,6 @@ function App() {
     setIsEditAvatarPopupOpen(true);
   };
 
-  function handleCardClick (card) {
-    const { link } = card;
-    setSelectedCard({isOpen: true, link});
-  }
-
   function closeAllPopups() {
     setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
@@ -70,28 +68,9 @@ function App() {
     });
   }
 
-  function handleUpdateUser(userData) {
-    api.sendUserInfo(userData)
-    .then((data) => {
-      setCurrentUser(data);
-      closeAllPopups();
-    })
-  }
-
-  function handleUpdateAvatar(userData) {
-    api.changeAvatar(userData)
-    .then((data) => {
-      setCurrentUser(data);
-      closeAllPopups();
-    })
-  }
-
-  function handleAddPlace(card) {
-    api.addNewCard(card)
-    .then((newCard) => {
-      setCards([...cards, newCard]);
-      closeAllPopups();
-    })
+  function handleCardClick (card) {
+    const { link } = card;
+    setSelectedCard({isOpen: true, link});
   }
 
   function handleCardLike(card) {
@@ -102,6 +81,7 @@ function App() {
       const newsCards = cards.map((c) => c._id === card._id ? newCard : c);
       setCards(newsCards)
     })
+    .catch((err) => console.log(`Ошибка ${err}`));
   }
 
   function handleCardDelete(card) {
@@ -109,6 +89,34 @@ function App() {
     .then(() => {
       setCards(cards.filter((c) => c !== card))
     })
+    .catch((err) => console.log(`Ошибка ${err}`));
+  }
+
+  function handleUpdateUser(userData) {
+    api.sendUserInfo(userData)
+    .then((data) => {
+      setCurrentUser(data);
+      closeAllPopups();
+    })
+    .catch((err) => console.log(`Ошибка ${err}`));
+  }
+
+  function handleUpdateAvatar(userData) {
+    api.changeAvatar(userData)
+    .then((data) => {
+      setCurrentUser(data);
+      closeAllPopups();
+    })
+    .catch((err) => console.log(`Ошибка ${err}`));
+  }
+
+  function handleAddPlace(card) {
+    api.addNewCard(card)
+    .then((newCard) => {
+      setCards([...cards, newCard]);
+      closeAllPopups();
+    })
+    .catch((err) => console.log(`Ошибка ${err}`));
   }
 
   return (
