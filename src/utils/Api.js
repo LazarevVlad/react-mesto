@@ -53,14 +53,17 @@ class Api {
       return Promise.reject(res.status);
     });
   }
-  addNewCard(form) {
+  addNewCard(newCard) {
     return fetch(`${this.options.baseUrl}/cards`, {
       method: "POST",
       headers: {
         authorization: this.options.token,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(form),
+      body: JSON.stringify({
+        name: newCard.name,
+        link: newCard.link,
+      }),
     }).then((res) => {
       if (res.ok) {
         return res.json();

@@ -86,6 +86,14 @@ function App() {
     })
   }
 
+  function handleAddPlace(card) {
+    api.addNewCard(card)
+    .then((newCard) => {
+      setCards([...cards, newCard]);
+      closeAllPopups();
+    })
+  }
+
   function handleCardLike(card) {
     const isLiked = card.likes.some(i => i._id === currentUser._id);
 
@@ -140,6 +148,7 @@ function App() {
           <AddPlacePopup
             isOpen={isAddPlacePopupOpen}
             onClose={closeAllPopups}
+            onUpdateCards={handleAddPlace}
           />
       </div>
     </CurrentUserContext.Provider>

@@ -1,8 +1,29 @@
+import React, { useState } from 'react';
 import PopupWithForm from './PopupWithForm';
 
 function AddPlacePopup(props) {
 
-  const { isOpen, onClose } = props;
+  const { isOpen, onClose, onUpdateCards } = props;
+
+  const [name, setName] = useState('');
+  const [link, setLink] = useState('');
+
+  function handleAddName(e) {
+    setName(e.target.value)
+  }
+
+  function handleAddLink(e) {
+    setLink(e.target.value);
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+
+    onUpdateCards({
+      name,
+      link
+    });
+  }
 
   return (
     <PopupWithForm 
@@ -10,6 +31,7 @@ function AddPlacePopup(props) {
       title='Новое место'
       name='new'
       onClose={onClose}
+      onSubmit={handleSubmit}
       children={(
         <>
           <div className="input-container">
@@ -22,6 +44,7 @@ function AddPlacePopup(props) {
               required
               minLength="2"
               maxLength="30"
+              onChange={handleAddName}
             />
             <span id="error-name" className="error-message"></span>
           </div>
@@ -33,12 +56,12 @@ function AddPlacePopup(props) {
               className="popup__input popup__input_type_link-url"
               placeholder="Ссылка на картинку"
               required
+              onChange={handleAddLink}
             />
             <span id="error-url" className="error-message"></span>
           </div>
           <button
             className="button popup__button popup__button_type_new"
-            disabled
           >
             +
           </button>
